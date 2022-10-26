@@ -3,12 +3,54 @@ import { useEffect, useState } from 'react';
 
 import close from '../assets/close.svg';
 
-const Home = ({ home, provider, escrow, togglePop }) => {
-    const [isBuying, setIsBuying] = useState(false)
+const Home = ({ home, provider, account, escrow, togglePop }) => {
+    const [hasBought, setHasBought] = useState(false)
+    const [hasLended, setHasLended] = useState(false)
+    const [hasInspected, setHasInspected] = useState(false)
+    const [hasSold, setHasSold] = useState(false)
+
+    const [buyer, setBuyer] = useState(null)
+    const [lender, setLender] = useState(null)
+    const [inspector, setInspector] = useState(null)
+    const [seller, setSeller] = useState(null)
+
     const [owner, setOwner] = useState(null)
 
+    const fetchDetails = async () => {
+        // -- Buyer
+
+        const buyer = await escrow.buyer(home.id)
+        setBuyer(buyer)
+
+        const hasBought = await escrow.approval(home.id, buyer)
+        setHasBought(hasBought)
+
+        // -- Seller
+
+        const seller = await escrow.seller()
+        setSeller(seller)
+
+        const hasSold = await escrow.approval(home.id, seller)
+        setHasSold(hasSold)
+
+        // -- Lender
+
+        const lender = await escrow.lender()
+        setLender(lender)
+
+        const hasLended = await escrow.approval(home.id, lender)
+        setHasLended(hasLended)
+
+        // -- Inspector
+
+        const inspector = await escrow.inspector()
+        setInspector(inspector)
+
+        const hasInspected = await escrow.inspectionPassed(home.id)
+        setHasInspected(hasInspected)
+    }
+
     const fetchOwner = async () => {
-        if (isBuying) return
         if (await escrow.isListed(home.id)) return
 
         const owner = await escrow.buyer(home.id)
@@ -16,53 +58,62 @@ const Home = ({ home, provider, escrow, togglePop }) => {
     }
 
     const buyHandler = async () => {
-        setIsBuying(true)
-
         const escrowAmount = await escrow.escrowAmount(home.id)
-        const buyer = await provider.getSigner()
-
-        // Setup other Hardhat wallets for simulating inspection, lending, and selling...
-        // NOTE: Never hardcode your private keys/mnemonics in your React application, these are
-        // publicly provided by Hardhat!
-
-        const inspector = new ethers.Wallet('0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a', provider)
-        const lender = new ethers.Wallet('0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6', provider)
-        const seller = new ethers.Wallet('0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d', provider)
+        const signer = await provider.getSigner()
 
         // Buyer deposit earnest
-        let transaction = await escrow.connect(buyer).depositEarnest(home.id, { value: escrowAmount })
+        let transaction = await escrow.connect(signer).depositEarnest(home.id, { value: escrowAmount })
         await transaction.wait()
+
+        // Buyer approves...
+        transaction = await escrow.connect(signer).approveSale(home.id)
+        await transaction.wait()
+
+        setHasBought(true)
+    }
+
+    const inspectHandler = async () => {
+        const signer = await provider.getSigner()
 
         // Inspector updates status
-        transaction = await escrow.connect(inspector).updateInspectionStatus(home.id, true)
+        const transaction = await escrow.connect(signer).updateInspectionStatus(home.id, true)
         await transaction.wait()
 
+        setHasInspected(true)
+    }
+
+    const lendHandler = async () => {
+        const signer = await provider.getSigner()
+
         // Lender approves...
-        transaction = await escrow.connect(lender).approveSale(home.id)
+        const transaction = await escrow.connect(signer).approveSale(home.id)
         await transaction.wait()
 
         // Lender sends funds to contract...
         const lendAmount = (await escrow.purchasePrice(home.id) - await escrow.escrowAmount(home.id))
-        await lender.sendTransaction({ to: escrow.address, value: lendAmount.toString(), gasLimit: 60000 })
+        await signer.sendTransaction({ to: escrow.address, value: lendAmount.toString(), gasLimit: 60000 })
+
+        setHasLended(true)
+    }
+
+    const sellHandler = async () => {
+        const signer = await provider.getSigner()
 
         // Seller approves...
-        transaction = await escrow.connect(seller).approveSale(home.id)
-        await transaction.wait()
-
-        // Buyer approves...
-        transaction = await escrow.connect(buyer).approveSale(home.id)
+        let transaction = await escrow.connect(signer).approveSale(home.id)
         await transaction.wait()
 
         // Seller finalize...
-        transaction = await escrow.connect(seller).finalizeSale(home.id)
+        transaction = await escrow.connect(signer).finalizeSale(home.id)
         await transaction.wait()
 
-        setIsBuying(false)
+        setHasSold(true)
     }
 
     useEffect(() => {
+        fetchDetails()
         fetchOwner()
-    }, [isBuying])
+    }, [hasSold])
 
     return (
         <div className="home">
@@ -87,9 +138,23 @@ const Home = ({ home, provider, escrow, togglePop }) => {
                         </div>
                     ) : (
                         <div>
-                            <button className='home__buy' onClick={buyHandler}>
-                                Buy
-                            </button>
+                            {(account === inspector) ? (
+                                <button className='home__buy' onClick={inspectHandler} disabled={hasInspected}>
+                                    Approve Inspection
+                                </button>
+                            ) : (account === lender) ? (
+                                <button className='home__buy' onClick={lendHandler} disabled={hasLended}>
+                                    Approve & Lend
+                                </button>
+                            ) : (account === seller) ? (
+                                <button className='home__buy' onClick={sellHandler} disabled={hasSold}>
+                                    Approve & Sell
+                                </button>
+                            ) : (
+                                <button className='home__buy' onClick={buyHandler} disabled={hasBought}>
+                                    Buy
+                                </button>
+                            )}
 
                             <button className='home__contact'>
                                 Contact agent

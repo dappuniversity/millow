@@ -43,6 +43,12 @@ function App() {
 
     const escrow = new ethers.Contract(config[network.chainId].escrow.address, Escrow, provider)
     setEscrow(escrow)
+
+    window.ethereum.on('accountsChanged', async () => {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = ethers.utils.getAddress(accounts[0])
+      setAccount(account);
+    })
   }
 
   useEffect(() => {
@@ -87,7 +93,7 @@ function App() {
       </div>
 
       {toggle && (
-        <Home home={home} provider={provider} escrow={escrow} togglePop={togglePop} />
+        <Home home={home} provider={provider} account={account} escrow={escrow} togglePop={togglePop} />
       )}
 
     </div>

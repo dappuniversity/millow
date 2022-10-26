@@ -1,9 +1,11 @@
+import { ethers } from 'ethers';
 import logo from '../assets/logo.svg';
 
 const Navigation = ({ account, setAccount }) => {
     const connectHandler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setAccount(accounts[0]);
+        const account = ethers.utils.getAddress(accounts[0])
+        setAccount(account);
     }
 
     return (

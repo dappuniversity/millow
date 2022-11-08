@@ -1,7 +1,7 @@
 {
-    "name": "Luxury NYC Penthouse",
+    "name": "Albi site 1",
     "address": "157 W 57th St APT 49B, New York, NY 10019",
-    "description": "Luxury Penthouse located in the heart of NYC",
+    "description": "100 Acers in Middle America",
     "image": "https://ipfs.io/ipfs/QmQUozrHLAusXDxrvsESJ3PYB3rUeUuBAvVWw6nop2uu7c/1.png",
     "id": "1",
     "attributes": [
@@ -10,24 +10,24 @@
             "value": 20
         },
         {
-            "trait_type": "Type of Residence",
-            "value": "Condo"
+            "trait_type": "Type of Site",
+            "value": "Grass"
         },
         {
-            "trait_type": "Bed Rooms",
-            "value": 2
+            "trait_type": "Holes",
+            "value": 19
         },
         {
-            "trait_type": "Bathrooms",
-            "value": 3
+            "trait_type": "Accommodations",
+            "value": 1
         },
         {
-            "trait_type": "Square Feet",
-            "value": 2200
+            "trait_type": "Acres",
+            "value": 100
         },
         {
-            "trait_type": "Year Built",
-            "value": 2013
+            "trait_type": "Year Built to set defalted to: 2022",
+            "value": 2022
         }
     ]
 }

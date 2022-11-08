@@ -7,6 +7,7 @@
 const hre = require("hardhat");
 
 const tokens = (n) => {
+  // eslint-disable-next-line no-undef
   return ethers.utils.parseUnits(n.toString(), 'ether')
 }
 

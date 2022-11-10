@@ -1,33 +1,33 @@
 {
-    "name": "Architectural CA Modern Home",
-    "address": "70780 Tamarisk Ln, Rancho Mirage, CA 92270",
-    "description": "Beautiful modern home in Rancho Mirage",
-    "image": "https://ipfs.io/ipfs/QmQUozrHLAusXDxrvsESJ3PYB3rUeUuBAvVWw6nop2uu7c/2.png",
-    "id": "2",
+    "name": "Albi site 2",
+    "address": "6795 Owen Hill Rd, College Grove, TN 37046",
+    "description": "110 Acres of Land for Sale in College Grove, Tennessee",
+    "image": "https://ipfs.io/ipfs/QmZGTtJEoveCvz4A3QAQQ1Dvn4FDyY3Foc76RtAriAVgCt",
+    "id": "1",
     "attributes": [
         {
             "trait_type": "Purchase Price",
             "value": 15
         },
         {
-            "trait_type": "Type of Residence",
-            "value": "Single family residence"
+            "trait_type": "Type of Site",
+            "value": "110 Acres of Land for Sale in College Grove, Tennessee"
         },
         {
-            "trait_type": "Bed Rooms",
-            "value": 4
+            "trait_type": "Holes",
+            "value": 19
         },
         {
-            "trait_type": "Bathrooms",
-            "value": 4
+            "trait_type": "Plot",
+            "value": 1
         },
         {
-            "trait_type": "Square Feet",
-            "value": 3979
+            "trait_type": "Acres",
+            "value": 110
         },
         {
-            "trait_type": "Year Built",
-            "value": 1980
+            "trait_type": "Year Built to set defalted to: 2022",
+            "value": 2022
         }
     ]
 }

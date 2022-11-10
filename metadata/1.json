@@ -1,8 +1,8 @@
 {
     "name": "Albi site 1",
-    "address": "Middle America",
-    "description": "100 Acers in Middle America",
-    "image": "https://ipfs.io/ipfs/QmQUozrHLAusXDxrvsESJ3PYB3rUeUuBAvVWw6nop2uu7c/1.png",
+    "address": "318 Snell Road , Shelbyville, TN 37160 - Bedford County",
+    "description": "118.62 Acres • $1,100,000",
+    "image": "https://ipfs.io/ipfs/QmZuwxBBqidXEW3RGQoDpuWvr6jZxHRDPKNmbTeL8ZRWfB",
     "id": "1",
     "attributes": [
         {
@@ -11,19 +11,19 @@
         },
         {
             "trait_type": "Type of Site",
-            "value": "Grass"
+            "value": "Gorgeous farm in the rolling countryside just south of Shelbyville."
         },
         {
             "trait_type": "Holes",
             "value": 19
         },
         {
-            "trait_type": "Accommodations",
+            "trait_type": "Plot",
             "value": 1
         },
         {
             "trait_type": "Acres",
-            "value": 100
+            "value": 118.62
         },
         {
             "trait_type": "Year Built to set defalted to: 2022",

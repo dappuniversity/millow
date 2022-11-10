@@ -1,33 +1,33 @@
 {
-    "name": "WA Nature Home",
-    "address": "183 Woodland Drive, Camano Island, WA 98282",
-    "description": "Comfy island home on Camano Island",
-    "image": "https://ipfs.io/ipfs/QmQUozrHLAusXDxrvsESJ3PYB3rUeUuBAvVWw6nop2uu7c/3.png",
-    "id": "3",
+    "name": "Albi site 3",
+    "address": "Wiley Hollow Rd, Fayetteville, TN 37334",
+    "description": "92 Acres of Recreational Land for Sale in Fayetteville, Tennessee",
+    "image": "https://ipfs.io/ipfs/QmYjZ65e9W5cVwgTS5tecv8YL5jMGF1jWXGP5T79nu7P63",
+    "id": "1",
     "attributes": [
         {
             "trait_type": "Purchase Price",
             "value": 10
         },
         {
-            "trait_type": "Type of Residence",
-            "value": "Single family residence"
+            "trait_type": "Type of Site",
+            "value": "92 Acres of Recreational Land for Sale in Fayetteville, Tennessee"
         },
         {
-            "trait_type": "Bed Rooms",
-            "value": 3
+            "trait_type": "Holes",
+            "value": 19
         },
         {
-            "trait_type": "Bathrooms",
-            "value": 3
+            "trait_type": "Plot",
+            "value": 1
         },
         {
-            "trait_type": "Square Feet",
-            "value": 2202
+            "trait_type": "Acres",
+            "value": 92
         },
         {
-            "trait_type": "Year Built",
-            "value": 2020
+            "trait_type": "Year Built to set defalted to: 2022",
+            "value": 2022
         }
     ]
 }

@@ -8,7 +8,12 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 contract RealEstate is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-
+   event RealEstateMinted(
+    uint256 indexed tokenId,
+    address indexed owner,
+    string tokenURI,
+    uint256 timestamp
+);
     constructor() ERC721("Real Estate", "REAL") {}
 
     function mint(string memory tokenURI) public returns (uint256) {
@@ -17,7 +22,8 @@ contract RealEstate is ERC721URIStorage {
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
-
+        // Emit custom mint event
+        emit RealEstateMinted(newItemId, msg.sender, tokenURI, block.timestamp);
         return newItemId;
     }
 
